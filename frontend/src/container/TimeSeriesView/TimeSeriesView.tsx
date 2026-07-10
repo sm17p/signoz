@@ -73,12 +73,8 @@ function TimeSeriesView({
 	const location = useLocation();
 	const { currentQuery } = useQueryBuilder();
 
-	const rawChartData = useMemo(
-		() => getUPlotChartData(data?.payload),
-		[data?.payload],
-	);
-
 	const { chartData, stackedBands } = useMemo(() => {
+		const rawChartData = getUPlotChartData(data?.payload);
 		if (!stackBarChart || !rawChartData || rawChartData.length < 2) {
 			return { chartData: rawChartData, stackedBands: null };
 		}
@@ -88,7 +84,7 @@ function TimeSeriesView({
 			noSeriesHidden,
 		);
 		return { chartData: stacked, stackedBands: bands };
-	}, [rawChartData, stackBarChart]);
+	}, [data?.payload, stackBarChart]);
 
 	useEffect(() => {
 		if (data?.payload) {
@@ -242,13 +238,9 @@ function TimeSeriesView({
 		},
 	});
 
-	const chartOptions = useMemo(
-		() =>
-			stackedBands
-				? { ...baseChartOptions, bands: stackedBands }
-				: baseChartOptions,
-		[baseChartOptions, stackedBands],
-	);
+	const chartOptions = stackedBands
+		? { ...baseChartOptions, bands: stackedBands }
+		: baseChartOptions;
 
 	const showExport = allowExport && !!data?.rawV5Response;
 	const showHeader = showExport || !!onYAxisUnitChange;
