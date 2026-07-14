@@ -1,4 +1,4 @@
-import { memo, MouseEvent, ReactNode, useMemo } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 import { Popover } from 'antd';
 import cx from 'classnames';
 import { OPERATORS } from 'constants/queryBuilder';
@@ -20,10 +20,7 @@ function AddToQueryHOC({
 		onAddToQuery(fieldKey, fieldValue, OPERATORS['='], dataType);
 	};
 
-	const popOverContent = useMemo(
-		() => <span>Add to query: {fieldKey}</span>,
-		[fieldKey],
-	);
+	const popOverContent = <span>Add to query: {fieldKey}</span>;
 
 	return (
 		<div className={cx('addToQueryContainer', fontSize)} onClick={handleQueryAdd}>
@@ -56,4 +53,4 @@ AddToQueryHOC.defaultProps = {
 	dataType: DataTypes.EMPTY,
 };
 
-export default memo(AddToQueryHOC);
+export default AddToQueryHOC;

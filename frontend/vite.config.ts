@@ -86,7 +86,11 @@ export default defineConfig(({ mode }): UserConfig => {
 		rawMarkdownPlugin(),
 		devBasePathPlugin(basePath),
 		devBootDataPlugin(env),
-		react(),
+		react({
+			babel: {
+				plugins: [['babel-plugin-react-compiler', { target: '18' }]],
+			},
+		}),
 		vitePluginChecker({
 			typescript: true,
 			// this doubles the build tim
